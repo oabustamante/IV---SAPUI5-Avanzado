@@ -1,0 +1,83 @@
+<mvc:View controllerName="employees.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page id="page" title="{i18n>title}">
+
+        <content>
+
+            <HBox wrap="Wrap">
+
+                <Label id="labelEmployee" labelFor="inputEmployee" text="{i18n>labelEmployee}" class="sapUiSmallMargin" />
+                <Input id="inputEmployee" value="{/EmployeeId}" maxLength="6" width="200px" class="sapUiSmallMarginEnd" />
+                <Label id="labelCountry" labelFor="slCountry" text="{i18n>labelCountry}" class="sapUiSmallMargin" />
+                <Select id="slCountry" selectedKey="{/CountryKey}" items="{/ListCountry}" forceSelection="false">
+                    <items>
+                        <core:Item key="{Key}" text="{Text}" />
+                    </items>
+                </Select>
+                <Button id="btnFilter" text="{i18n>btnFilter}" icon="sap-icon://search" press=".onFilter" class="sapUiSmallMarginEnd" />
+                <Button id="btnClearFilter" text="{i18n>btnClearFilter}" icon="sap-icon://clear-filter" press=".onClearFilter" class="sapUiSmallMarginEnd" />
+            </HBox>
+
+            <!--<HBox>
+
+                <Panel>
+
+                    <Button id="btnShowCity" text="{i18n>btnShowCity}" press=".onShowCity" visible="{jsonConfig>/visibleBtnShowCity}" />
+                    <Button id="btnHideCity" text="{i18n>btnHideCity}" press=".onHideCity" visible="{jsonConfig>/visibleBtnHideCity}" />
+
+
+                    <Table id="tableEmployees" items="{northwind>/Employees}">
+                        <columns>
+                            <Column visible="{jsonConfig>/visibleID}">
+                                <header>
+                                    <Label text="{i18n>tableId}" />
+                                </header>
+                            </Column>
+                            <Column visible="{jsonConfig>/visibleName}">
+                                <header>
+                                    <Label text="{i18n>tableName}" />
+                                </header>
+                            </Column>
+                            <Column visible="{jsonConfig>/visibleCountry}">
+                                <header>
+                                    <Label text="{i18n>tableCountry}" />
+                                </header>
+                            </Column>
+                            <Column visible="{jsonConfig>/visibleCity}">
+                                <header>
+                                    <Label text="{i18n>tableCity}" />
+                                </header>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem type="Active" press=".onShowOrders">
+                                <cells>
+                                    <Label text="{northwind>EmployeeID}" />
+                                    <Label text="{northwind>LastName} {northwind>FirstName}" />
+                                    <Label text="{northwind>Country}" />
+                                    <Label text="{northwind>City}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+
+                    <HBox id="ordersTable">
+                    
+                    
+                    
+                    </HBox>
+
+                </Panel>
+
+            </HBox>  -->
+
+            <core:Fragment fragmentName="employees.fragment.TableEmployee" type="XML" />
+
+        </content>
+
+    </Page>
+
+</mvc:View>

@@ -1,0 +1,60 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">>
+
+    <Panel>
+
+        <Button id="btnShowCity" text="{i18n>btnShowCity}" press=".onShowCity" visible="{jsonConfig>/visibleBtnShowCity}" />
+        <Button id="btnHideCity" text="{i18n>btnHideCity}" press=".onHideCity" visible="{jsonConfig>/visibleBtnHideCity}" />
+
+        <Table id="tableEmployees" items="{northwind>/Employees}">
+            <columns>
+                <Column visible="{jsonConfig>/visibleID}">
+                    <header>
+                        <Label text="{i18n>tableId}" />
+                    </header>
+                </Column>
+                <Column visible="{jsonConfig>/visibleName}">
+                    <header>
+                        <Label text="{i18n>tableName}" />
+                    </header>
+                </Column>
+                <Column visible="{jsonConfig>/visibleCountry}">
+                    <header>
+                        <Label text="{i18n>tableCountry}" />
+                    </header>
+                </Column>
+                <Column visible="{jsonConfig>/visibleCity}">
+                    <header>
+                        <Label text="{i18n>tableCity}" />
+                    </header>
+                </Column>
+                <Column>
+                    <header>
+                        <Label text="{i18n>tableShowDetails}" />
+                    </header>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Navigation" press=".showEmployee">
+                    <cells>
+                        <Label text="{northwind>EmployeeID}" />
+                        <Label text="{northwind>LastName} {northwind>FirstName}" />
+                        <Label text="{northwind>Country}" />
+                        <Label text="{northwind>City}" />
+                        <core:Icon src="sap-icon://show" press=".onShowOrders" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <!-- <HBox id="ordersTable">
+        
+        
+        
+        </HBox> -->
+
+    </Panel>
+
+
+</core:FragmentDefinition>

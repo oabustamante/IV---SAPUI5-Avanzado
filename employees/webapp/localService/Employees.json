@@ -1,0 +1,34 @@
+{
+    "EmployeeId": "",
+    "CountryKey": "",
+    "ListCountry": [
+        {
+            "Key": "USA",
+            "Text": "United States"
+        },
+        {
+            "Key": "UK",
+            "Text": "United Kindom"
+        },
+        {
+            "Key": "ES",
+            "Text": "Spain"
+        }
+    ],
+    "Employees": [
+        {
+            "EmployeeId": "1",
+            "LastName": "García Lopez",
+            "FirstName": "Maria",
+            "Country": "Spain",
+            "City": "Madrid"
+        },
+        {
+            "EmployeeId": "2",
+            "LastName": "García Lopez",
+            "FirstName": "Maria",
+            "Country": "Spain",
+            "City": "Madrid"
+        }
+    ]
+}

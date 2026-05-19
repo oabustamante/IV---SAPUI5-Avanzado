@@ -1,0 +1,42 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <Dialog title="{i18n>orders}">
+        <content>
+            <!-- <Table items="{northwind>/Orders}" width="700px">
+                <columns>
+                    <Column>
+                        <header>
+                            <Label text="{i18n>OrderID}" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="{i18n>Freight}" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="{i18n>ShipName}" />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Label text="{northwind>OrderID}" />
+                            <Label text="{northwind>Freight}" />
+                            <Label text="{northwind>ShipName}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table> -->
+            <core:Fragment fragmentName="employees.fragment.TableOrders" type="XML" />
+        </content>
+        <endButton>
+            <Button text="{i18n>close}" press=".onCloseOrders" />
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

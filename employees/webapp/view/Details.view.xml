@@ -1,0 +1,98 @@
+<mvc:View
+    controllerName="employees.controller.Details"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    
+    <Page title="{i18n>employeeDetailsTitle}">
+
+        <Panel>
+        
+            <FlexBox height="65px" alignItems="Center" justifyContent="Center">
+                <items>
+                    <Text text="{northwind>FirstName}, {northwind>LastName}" class="boldText" />
+                </items>
+            </FlexBox>
+
+            <FlexBox height="65px" alignItems="Start" justifyContent="SpaceBetween">
+                <items>
+                    <VBox>
+                        <Text text="{i18n>employeeID}" class="boldText sapUiTinyMarginEnd" />
+                        <Text text="{northwind>EmployeeID}" class="sapUiTinyMarginEnd" />
+                    </VBox>
+                    <VBox>
+                        <Text text="{i18n>titleEmployee}" class="boldText sapUiTinyMarginEnd" />
+                        <Text text="{northwind>Title}" class="sapUiTinyMarginEnd" />
+                    </VBox>
+                </items>
+            </FlexBox>
+
+            <FlexBox alignItems="Start">
+                <items>
+                    <HBox>
+                        <Text text="{i18n>countryCode}" class="boldText sapUiTinyMarginEnd" />
+                        <Text text="{northwind>Country}" class="sapUiTinyMarginEnd" />
+                        <layoutData>
+                            <FlexItemData growFactor="3"></FlexItemData>
+                        </layoutData>
+                    </HBox>
+                    <HBox>
+                        <Text text="{i18n>city}" class="boldText sapUiTinyMarginEnd" />
+                        <Text text="{northwind>City}" class="sapUiTinyMarginEnd" />
+                        <layoutData>
+                            <FlexItemData growFactor="2"></FlexItemData>
+                        </layoutData>
+                    </HBox>
+                    <FlexBox direction="Row" alignItems="Start">
+                        <Text text="{i18n>postalCode}" class="boldText sapUiTinyMarginEnd" />
+                        <Text text="{northwind>PostalCode}" class="sapUiTinyMarginEnd" />
+                        <layoutData>
+                            <FlexItemData growFactor="1"></FlexItemData>
+                        </layoutData>
+                    </FlexBox>
+                </items>
+            </FlexBox>
+
+        </Panel>
+
+        <Panel class="sapUiSizeCompact" backgroundDesign="Transparent">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>incidence} {= ${northwind>Country} !== 'USA' ? ${i18n>europe} : ${i18n>us} }"></Title>
+                    <ToolbarSpacer ></ToolbarSpacer>
+                    <Button text="{i18n>createIncidence}" press="onCreateIncidence"></Button>
+                </Toolbar>
+            </headerToolbar>
+            <Panel id="tableIncidence" class="sapUiNoContentPadding" backgroundDesign="Transparent">
+                <!-- <Table items="{northwind>Incidences}">
+                    <columns>
+                        <Column>
+                            <Text text="{i18n>incidenceID}" class="boldText" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>date}" class="boldText" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>description}" class="boldText" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{IncidenceID}" />
+                                <Text text="{Date}" />
+                                <Text text="{Description}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table> -->
+            </Panel>
+        </Panel>
+        <Panel class="sapUiNoContentPadding" backgroundDesign="Transparent" headerText="{i18n>orders}">
+            <core:Fragment fragmentName="employees.fragment.TableOrders" type="XML" />
+        </Panel>
+
+    </Page>
+
+</mvc:View>
