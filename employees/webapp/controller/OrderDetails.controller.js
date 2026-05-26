@@ -20,12 +20,10 @@ sap.ui.define([
 
     function _onObjectMatched(oEvent) {
         this.onClearSignature();
-
         this.getView().bindElement({
             path: "/Orders(" + oEvent.getParameter("arguments").OrderID + ")",
             model: "northwind",
-            events : {
-                // después de cargar los datos de la orden, se lee la firma
+            events: {
                 dataReceived: function (oData) {
                     _readSignature.bind(this)(oData.getParameter("data").OrderID, oData.getParameter("data").EmployeeID);
                 }.bind(this)
@@ -33,8 +31,10 @@ sap.ui.define([
         });
 
         const objectContext = this.getView().getModel("northwind").getContext("/Orders(" + oEvent.getParameter("arguments").OrderID + ")").getObject();
-        objectContext.OrderId;
-        //_readSignature.bind(this)(objectContext.OrderID, objectContext.EmployeeID);
+
+        if (objectContext) {
+            _readSignature.bind(this)(objectContext.OrderID, objectContext.EmployeeID);
+        }
     }
 
     function _readSignature(orderId, employeeId) {
@@ -61,15 +61,15 @@ sap.ui.define([
             path: "incidence>/FilesSet",
             filters: [
                 new Filter("OrderId", FilterOperator.EQ, orderId),
-                 new Filter("SapId", FilterOperator.EQ, this.getOwnerComponent().SapId),
-                 new Filter("EmployeeId", FilterOperator.EQ, employeeId)
+                new Filter("SapId", FilterOperator.EQ, this.getOwnerComponent().SapId),
+                new Filter("EmployeeId", FilterOperator.EQ, employeeId)
             ],
             template: new sap.m.UploadCollectionItem({
                 documentId: "{incidence>AttId}",
                 visibleEdit: false,
                 fileName: "{incidence>FileName}",
             }).attachPress(this.downloadFile)
-        })
+        });
     }
 
     return Controller.extend("employees.webapp.controller.OrderDetails", {
@@ -132,10 +132,11 @@ sap.ui.define([
             } else {
                 signaturePng = signature.getSignature().replace("data:image/png;base64,", "");
                 let objectOrder = oEvent.getSource().getBindingContext("northwind").getObject();
+
                 let body = {
                     OrderId: objectOrder.OrderID.toString(),
                     SapId: this.getOwnerComponent().SapId,
-                    EmployeeId: objectOrder.EmployeeId.toString(),
+                    EmployeeId: objectOrder.EmployeeID.toString(),
                     MimeType: 'image/png',
                     MediaContent: signaturePng
                 };
@@ -150,7 +151,7 @@ sap.ui.define([
                 });
             }
         },
-
+// >> Files
         onFileBeforeUpload : function (oEvent) {
             let fileName = oEvent.getParameter("fileName");
             let objectContext = oEvent.getSource().getBindingContext("northwind").getObject();
@@ -158,11 +159,7 @@ sap.ui.define([
                 name: "slug",
                 value: objectContext.OrderID + ";" + this.getOwnerComponent().SapId + ";" + objectContext.EmployeeID + ";" + fileName
             });
-            /* let slug = objectContext.OrderID + ";" + this.getOwnerComponent().SapId + ";" + objectContext.EmployeeID + ";" + fileName;
-            oEvent.getParameters().addHeaderParameter(new sap.m.UploadCollectionParameter({
-                name: "slug",
-                value: slug
-            })); */
+
             oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
         },
 
@@ -196,7 +193,7 @@ sap.ui.define([
 
         downloadFile : function (oEvent) {
             const sPath = oEvent.getSource().getBindingContext("incidence").getPath();
-            window.open("/sap/opu/odata/sap/YSAPUI5_SRV_01" + sPath + "/$value");
+            window.open("/employees/sap/opu/odata/sap/YSAPUI5_SRV_01" + sPath + "/$value");
         }
     });
 });

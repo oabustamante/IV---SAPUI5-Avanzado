@@ -13,7 +13,7 @@ sap.ui.define([
             let oJSONModel = new sap.ui.model.json.JSONModel();
             let oView = this.getView();
             let i18nBundle =this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            oJSONModel.loadData("../localService/Employees.json", false);
+            oJSONModel.loadData("./model/json/Employees.json", false);
             oView.setModel(oJSONModel);
 
             let oJSONModelConfig = new sap.ui.model.json.JSONModel({
@@ -26,19 +26,18 @@ sap.ui.define([
             oView.setModel(oJSONModelConfig, "jsonConfig");
 
             let oJSONModelLayout = new sap.ui.model.json.JSONModel();
-            oJSONModelLayout.loadData("../localService/Layout.json", false);
+            oJSONModelLayout.loadData("./model/json/Layout.json", false);
             oView.setModel(oJSONModelLayout, "jsonLayout");
 
             this._bus = sap.ui.getCore().getEventBus();
-            this._bus.subscribe("flexible", "showEmployee", this.showEmployeeDetails, this);
+            this._bus.subscribe("flexible", "showEmployee", this.showEmployeeDetails, this);    // flexible . showEmployee
             this._bus.subscribe("incidence", "onSaveIncidence", this.onSaveODataIncidence, this);
             
             this._bus.subscribe("incidence", "onDeleteIncidence", function (channelId, eventId, data) {
                 let oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-                this.getView().getModel("incidenceModel").remove(
-                                                                    "/IncidenceSet(IncidenceId='" + data.IncidenceId +
-                                                                    "', SapId='" + data.SapId +
-                                                                    "', EmployeeId='" + data.EmployeeId + "')", {
+                this.getView().getModel("incidence").remove("/IncidentsSet(IncidenceId='" + data.IncidenceId +
+                                                            "',SapId='" + data.SapId +
+                                                            "',EmployeeId='" + data.EmployeeId + "')", {
                     success: function (data) {
                         this.onReadODataIncidence.bind(this)(data.EmployeeId);
                         sap.m.MessageToast.show(oResourceBundle.getText("incidenceDeleteOk"));
@@ -51,8 +50,6 @@ sap.ui.define([
         },
 
         showEmployeeDetails: function (category, nameEvent, path) {
-            //console.log("App.showEmployeeDetails()")
-            //console.log("path: " + path);
             let detailView = this.getView().byId("detailEmployee");
             detailView.bindElement("northwind>" + path);
             this.getView().getModel("jsonLayout").setProperty("/ActiveKey", "TwoColumnsMidExpanded");
@@ -62,7 +59,6 @@ sap.ui.define([
             detailView.byId("tableIncidence").removeAllContent();
 
             this.onReadODataIncidence(this._detailEmployeeView.getBindingContext("northwind").getObject().EmployeeID);
-
         },
 
         onSaveODataIncidence: function (channelId, eventId, data) {
@@ -78,7 +74,7 @@ sap.ui.define([
                     Type: incidenceModel[data.incidenceRow].Type,
                     Reason: incidenceModel[data.incidenceRow].Reason
                 };
-                this.getView().getModel("incidenceModel").create("/IncidenceSet", body, {
+                this.getView().getModel("incidence").create("/IncidentsSet", body, {
                     success: function (data) {
                         this.onReadODataIncidence.bind(this)(employeeId);
                         sap.m.MessageToast.show(oResourceBundle.getText("incidenceSaved"));
@@ -98,10 +94,9 @@ sap.ui.define([
                     Reason: incidenceModel[data.incidenceRow].Reason,
                     ReasonX: incidenceModel[data.incidenceRow].ReasonX
                 };
-                this.getView().getModel("incidenceModel").update(
-                                                                    "/IncidenceSet(IncidenceId='" + incidenceModel[data.incidenceRow].IncidenceId +
-                                                                    "', SapId='" + incidenceModel[data.incidenceRow].SapId +
-                                                                    "', EmployeeId='" + incidenceModel[data.incidenceRow].EmployeeId + "')", body, {
+                this.getView().getModel("incidence").update("/IncidentsSet(IncidenceId='" + incidenceModel[data.incidenceRow].IncidenceId +
+                                                            "',SapId='" + incidenceModel[data.incidenceRow].SapId +
+                                                            "',EmployeeId='" + incidenceModel[data.incidenceRow].EmployeeId + "')", body, {
                     success: function (data) {
                         this.onReadODataIncidence.bind(this)(employeeId);
                         sap.m.MessageToast.show(oResourceBundle.getText("incidenceUpdateOk"));
@@ -111,26 +106,16 @@ sap.ui.define([
                     }.bind(this)
                 });
             } else {
-              sap.m.MessageToast.show(oResourceBundle.getText("incidenceNoChanges"));
+                sap.m.MessageToast.show(oResourceBundle.getText("incidenceNoChanges"));
             }
         },
 
-
-
         onReadODataIncidence : function (employeeId) {
-            /* let oModel = this.getView().getModel("incidenceModel");
-            oModel.read("/Employees", {
-                success: (oData) => {
-                    console.log(oData);
-                },
-                error: (oError) => {
-                    console.log(oError);
-                }
-            }); */
-            this.getView.getModel("incidenceModel").read("/IncidenceSet", {
+
+            this.getView().getModel("incidence").read("/IncidentsSet", {
                 filters: [
-                  //  new sap.ui.model.Filter("SapId", sap.ui.model.FilterOperator.EQ, this.getOwnerComponent().SapId),
-                    new sap.ui.model.Filter("EmployeeId", sap.ui.model.FilterOperator.EQ, employeeId.toString())
+                    new sap.ui.model.Filter("SapId", "EQ", this.getOwnerComponent().SapId),
+                    new sap.ui.model.Filter("EmployeeId", "EQ", employeeId.toString())
                 ],
                 success: function (data) {
                     let incidenceModel = this._detailEmployeeView.getModel("incidenceModel");
@@ -150,10 +135,5 @@ sap.ui.define([
                 }
             });
         }
-
-
-
-
-
     });
 });

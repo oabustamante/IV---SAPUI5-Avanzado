@@ -5,9 +5,9 @@
     <Panel>
         <headerToolbar>
             <Toolbar>
-                <core:Icon src="{= ${incidenceModel>Type} === '0' ? 'accept' :
-                                    ${incidenceModel>Type} === '1' ? 'alert' :
-                                    ${incidenceModel>Type} === '2' ? 'decline' : '' }" />
+                <core:Icon src="{= ${incidenceModel>Type} === '0' ? 'sap-icon://accept' :
+                                    ${incidenceModel>Type} === '1' ? 'sap-icon://alert' :
+                                    ${incidenceModel>Type} === '2' ? 'sap-icon://decline' : '' }" />
                 <!-- <Title text="{i18n>incidence} {incidenceModel>IncidenceId} { path: 'incidenceModel>CreationDate', formatter: '.Formatter.dateFormat' }" /> -->
                 <Title text="{i18n>incidence} {= ${incidenceModel>IncidenceId} ? parseInt(${incidenceModel>IncidenceId}) : '' }
                             { path: 'incidenceModel>CreationDate', formatter: '.Formatter.dateFormat' }" />

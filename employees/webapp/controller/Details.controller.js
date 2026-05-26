@@ -30,24 +30,6 @@ sap.ui.define([
     }
 
     function onDeleteIncidence (oEvent) {
-        /* let tableincidence = this.getView().byId("tableIncidence");
-        let rowIncidence = oEvent.getSource().getParent().getParent();
-        let incidenceModel = this.getView().getModel("incidenceModel");
-        let oData = incidenceModel.getData();
-
-        let contextObject = rowIncidence.getBindingContext("incidenceModel");
-
-        oData.splice(contextObject.index - 1, 1);
-        for (let i in oData) {
-          oData[i].index = parseInt(i) + 1;
-        }
-        incidenceModel.refresh();
-        tableincidence.removeContent(rowIncidence);
-        
-        for (let j in tableincidence.getContent()) {
-          tableincidence.getContent()[j].bindElement("incidenceModel>/" + j);
-        } */
-
         let contextObject = oEvent.getSource().getBindingContext("incidenceModel").getObject();
         this._bus.publish("incidence", "onDeleteIncidence", {
             IncidenceId : contextObject.IncidenceId,
@@ -60,8 +42,6 @@ sap.ui.define([
         let incidence = oEvent.getSource().getParent().getParent();
         let incidenceRow = incidence.getBindingContext("incidenceModel");
         this._bus.publish("incidence", "onSaveIncidence", { incidenceRow : incidenceRow.sPath.replace('/', '') });
-
-
     }
 
     function updateIncidenceCreationDate (oEvent) {

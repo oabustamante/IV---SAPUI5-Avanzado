@@ -72,12 +72,11 @@
                     multiple="true"
                     sameFilenameAllowed="true"
                     instantUpload="true"
-                    uploadUrl="/sap/opu/odata/sap/YSAPUI5_SRV_01/FileSet"
+                    uploadUrl="/employees/sap/opu/odata/sap/YSAPUI5_SRV_01/FilesSet"
                     change="onFileChange"
                     uploadComplete="onFileUploadComplete"
                     beforeUploadStarts="onFileBeforeUpload"
-                    fileDeleted="onFileDeleted"
-                    />
+                    fileDeleted="onFileDeleted" />
             </Panel>
 
             <Panel headerText="{i18n>orderProducts}">
